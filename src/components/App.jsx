@@ -20,7 +20,7 @@ class App extends React.Component {
   }
 
   data(data) {
-    this.setState({videoList: data, currentVideo: data[0]});
+    this.setState({videoList: data});
   }
 
   onVideoClick(event) {
