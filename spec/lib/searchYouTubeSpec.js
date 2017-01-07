@@ -50,7 +50,7 @@ describe('searchYouTube', function() {
   });
 
   it('should send a GET request', function() {
-    searchYouTube({}, () => {});
+    searchYouTube(() => {});
 
     expect(requests[0].method).to.equal('GET');
   });
@@ -68,7 +68,7 @@ describe('searchYouTube', function() {
   // though it will not necessarily have the same values.
   it('should GET videos with the same shape as `exampleVideoData`', function(done) {
     var options = {
-      key: window.AIzaSyBgPKRbE6Hfvgzh_PK7v6PVNahP3UCnSek,
+      key: window.YOUTUBE_API_KEY,
       query: 'react',
       max: 5
     };

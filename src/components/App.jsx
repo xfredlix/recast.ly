@@ -2,16 +2,30 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.currentVideo = window.fakeVideoData[0];
-    searchYouTube();
+    this.options = {
+      key: window.YOUTUBE_API_KEY,
+      query: 'react',
+      max: 5
+    };
+    // let videos = props.searchYouTube(options, data);
+    // console.log(videos);
+    this.state = {
+      currentVideo: fakeVideoData[0],
+      videoList: fakeVideoData
+    };
+    this.currentVideo = exampleVideoData[0];
+    props.searchYouTube(this.options, this.data.bind(this));
+  }
+
+  data(data) {
+    this.setState({videoList: data, currentVideo: data[0]});
   }
 
   onVideoClick(event) {
     let nextVideo = $(event.target).text();
-    for (var i = 0; i < window.fakeVideoData.length; i++) {
-      if (window.fakeVideoData[i].snippet.title === nextVideo) {
-        this.currentVideo = window.fakeVideoData[i];
-        this.forceUpdate();
+    for (var i = 0; i < this.state.videoList.length; i++) {
+      if (this.state.videoList[i].snippet.title === nextVideo) {
+        this.setState( {currentVideo: this.state.videoList[i]} );
       }
     }
   }
@@ -19,12 +33,13 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Search />
         <Nav />
         <div className="col-md-7">
-          <VideoPlayer video = {this.currentVideo}/>
+          <VideoPlayer video = {this.state.currentVideo}/>
         </div>
         <div onClick={this.onVideoClick.bind(this)} className="col-md-5">
-          <VideoList videos = {window.fakeVideoData}/>
+          <VideoList videos = {this.state.videoList}/>
         </div>
       </div>
     );
