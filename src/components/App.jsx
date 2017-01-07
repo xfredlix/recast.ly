@@ -2,19 +2,21 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.options = {
-      key: window.YOUTUBE_API_KEY,
-      query: 'react',
-      max: 5
-    };
     // let videos = props.searchYouTube(options, data);
     // console.log(videos);
     this.state = {
       currentVideo: fakeVideoData[0],
-      videoList: fakeVideoData
+      videoList: fakeVideoData,
+      key: window.YOUTUBE_API_KEY,
+      q: 'warriors',
+      max: 5
     };
     this.currentVideo = exampleVideoData[0];
-    props.searchYouTube(this.options, this.data.bind(this));
+    this.props.searchYouTube({
+      key: this.state.key,
+      q: this.state.q,
+      maxResults: this.state.max
+    }, this.data.bind(this));
   }
 
   data(data) {
@@ -30,11 +32,22 @@ class App extends React.Component {
     }
   }
 
+  onVideoChange(event) {
+    this.setState({ q: $(event.target).val()});
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    this.props.searchYouTube({
+      key: this.state.key,
+      q: this.state.q,
+      maxResults: this.state.max
+    }, this.data.bind(this));
+  }
+
   render() {
     return (
       <div>
-        <Search />
-        <Nav />
+        <Nav prop={this.onVideoChange.bind(this)}/>
         <div className="col-md-7">
           <VideoPlayer video = {this.state.currentVideo}/>
         </div>
