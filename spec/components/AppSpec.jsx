@@ -20,6 +20,7 @@ describe('App', function() {
 
   it('should render a single VideoPlayer component', function() {
     var videoPlayer = findRenderedDOMComponentWithClass(app, 'video-player');
+    console.log(videoPlayer);
     expect(videoPlayer).to.exist;
   });
 
@@ -39,14 +40,14 @@ describe('App', function() {
       Simulate.click(videoEntryTitle);
       var player = findRenderedDOMComponentWithClass(app, 'video-player');
       var playerTitle = player.querySelector('.video-player-details h3');
-
+      // debugger;
       // This test assumes that if you can successfully update the video player's title,
       // you can also update the video and description
       expect(playerTitle.innerHTML).to.equal(videoEntryTitle.innerHTML);
     });
   });
 
-  xdescribe('when rendering live data from YouTube', function() {
+  describe('when rendering live data from YouTube', function() {
     var searchYouTubeStub;
 
     beforeEach(function() {
